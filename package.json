@@ -1,0 +1,44 @@
+{
+    "name": "ts-node-test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
+        "start:watch": "nodemon",
+        "build": "tsc"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/lodash": "^4.14.123",
+        "@types/node": "^11.13.7",
+        "eslint": "^5.16.0",
+        "eslint-plugin-import": "^2.17.2",
+        "nodemon": "^1.18.11",
+        "ts-node": "^8.1.0",
+        "typescript": "^3.4.5"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "date-fns": "^1.30.1",
+        "dotenv": "^7.0.0",
+        "lodash": "^4.17.11",
+        "mongoose": "^5.5.4",
+        "telegraf": "^3.29.0"
+    },
+    "nodemonConfig": {
+        "ignore": [
+            "**/*.test.ts",
+            "**/*.spec.ts",
+            ".git",
+            "node_modules"
+        ],
+        "watch": [
+            "src"
+        ],
+        "exec": "npm start",
+        "ext": "ts"
+    }
+}
