@@ -27,13 +27,13 @@ const minusSum: ICommand = {
         const { text } = ctx.message;
 
         let sumExpression = text.match(/^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/)[0];
-        sumExpression = sumExpression.replace(',', '.').slice(1);
+        sumExpression = sumExpression.replace(/,/g, '.').slice(1);
 
         const t = new Transaction({
-            sum: eval(sumExpression),
+            sum: Math.round(eval(sumExpression) * 100) / 100,
             date: parseDate(safeMatchOne(text, /@([^\s]+)/)),
             actor: ctx.from.username,
-            currency: safeMatchOne(text, /\s\$([A-Z]{3})\s/, 'ILS'),
+            currency: safeMatchOne(text, /\s\$([A-Z]{3})/, 'ILS'),
             category: safeMatchOne(text, /\/(\w+)/, 'Unsorted'),
             tags: matchTags(text),
             description: safeMatchOne(text, /\s([\w\s]+)/).trim(),
