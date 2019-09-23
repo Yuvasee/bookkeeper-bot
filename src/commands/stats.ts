@@ -1,33 +1,26 @@
+const format = require('date-fns/format');
+
 import ICommand from '../interfaces/ICommand';
 import Transaction from '../models/Transaction';
+import Rate from '../models/Rate';
 import { errorView } from './_views';
-// import { getRates } from '../rates';
 
 const revert: ICommand = {
     re: /^stats$/,
 
     cb: (ctx, next) => {
-        // TODO: filter by date
+        // TODO: filter by date (monthes)
 
-        // Check if rates are needed
-        const rates = {};
-        Transaction.aggregate(
-            [
-                {
-                    $project: {
-                        date: '$date',
-                        indexOfILS: { $indexOfCP: ['$currency', 'ILS'] },
-                        currency: '$currency',
-                    },
-                },
-                { $match: { indexOfILS: { $lt: 0 } } },
-                { $group: { _id: '$date' } },
-            ],
-            (err, res) => {
-                err && ctx.replyWithHTML(errorView(err));
-                ctx.replyWithHTML(res);
-            },
-        );
+        const { text } = ctx.message;
+
+        let period = text.match(/^stats\s+([\d\w]+)\s?/);
+
+        if (period) {
+            period = period[1];
+            !period.match(/\d\d/) && Number(period) < 12
+        } else {
+            period = format(new Date(), 'MM');
+        }
 
         // const { text } = ctx.message;
         Transaction.aggregate(
