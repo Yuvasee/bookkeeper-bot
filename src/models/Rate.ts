@@ -9,6 +9,7 @@ const rateToIlsSchema = new Schema({
         enum: CURRENCIES,
     },
     rate: Number,
+    env: String,
 });
 
 const Rate = model('Rate', rateToIlsSchema);

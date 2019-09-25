@@ -1,11 +1,11 @@
 const format = require('date-fns/format');
 
-import ICommand from '../interfaces/ICommand';
+import Command from '../interfaces/Command';
 import Transaction from '../models/Transaction';
 import Rate from '../models/Rate';
-import { errorView } from './_views';
+import { error } from "../views/error";
 
-const revert: ICommand = {
+const revert: Command = {
     re: /^stats$/,
 
     cb: (ctx, next) => {
@@ -26,7 +26,7 @@ const revert: ICommand = {
         Transaction.aggregate(
             [{ $group: { _id: '$category', sum: { $sum: '$sum' } } }, { $sort: { sum: -1 } }],
             (err, res) => {
-                err && ctx.replyWithHTML(errorView(err));
+                err && ctx.replyWithHTML(error(err));
                 ctx.replyWithHTML(res);
             },
         );

@@ -1,6 +1,7 @@
-import ICommand from '../interfaces/ICommand';
+import Command from '../interfaces/Command';
 import Transaction from '../models/Transaction';
-import { errorView, transactionView } from './_views';
+import { error } from "../views/error";
+import { transaction } from "../views/transaction";
 
 function safeMatchOne(str, re, def = '') {
     const result = str.match(re);
@@ -20,7 +21,7 @@ function parseDate(str) {
     return dt.toString() === 'Invalid Date' ? new Date() : dt;
 }
 
-const minusSum: ICommand = {
+const minusSum: Command = {
     re: /^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/,
 
     cb: (ctx, next) => {
@@ -39,11 +40,11 @@ const minusSum: ICommand = {
             description: safeMatchOne(text, /\s([\w\s]+)/).trim(),
         });
 
-        ctx.replyWithHTML(transactionView(t));
+        ctx.replyWithHTML(transaction(t));
 
         t.save((err) => {
             if (err) {
-                ctx.replyWithHTML(errorView(err));
+                ctx.replyWithHTML(error(err));
             }
 
             ctx.replyWithHTML(`<b>Saved ${t.get('sum')} for ${t.get('category')}</b>`);

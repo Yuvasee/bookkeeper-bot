@@ -1,8 +1,9 @@
-import ICommand from '../interfaces/ICommand';
+import Command from '../interfaces/Command';
 import Transaction from '../models/Transaction';
-import { errorView, transactionView } from './_views';
+import { error } from "../views/error";
+import { transaction } from "../views/transaction";
 
-const revert: ICommand = {
+const revert: Command = {
     re: /^revert$/,
 
     cb: (ctx, next) => {
@@ -10,10 +11,10 @@ const revert: ICommand = {
             .sort({ createdAt: -1 })
             .findOneAndDelete((err, t) => {
                 if (err) {
-                    ctx.replyWithHTML(errorView(err));
+                    ctx.replyWithHTML(error(err));
                 }
 
-                ctx.replyWithHTML(transactionView(t) + '\n<b>Deleted</b>');
+                ctx.replyWithHTML(transaction(t) + '\n<b>Deleted</b>');
             });
 
         next();

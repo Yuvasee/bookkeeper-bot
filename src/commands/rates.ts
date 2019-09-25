@@ -2,10 +2,10 @@ const format = require('date-fns/format');
 const uniq = require('lodash/uniq');
 import axios from 'axios';
 
-import ICommand from '../interfaces/ICommand';
+import Command from '../interfaces/Command';
 import Rate, { CURRENCIES } from '../models/Rate';
 import Transaction from '../models/Transaction';
-import { errorView } from './_views';
+import { error } from "../views/error";
 
 const RATES_API_URL = 'https://api.exchangeratesapi.io/';
 const BASE_CURRENCY = 'ILS';
@@ -30,7 +30,7 @@ function saveRatesFromApi(data, dt) {
     );
 }
 
-const rates: ICommand = {
+const rates: Command = {
     re: /^rates$/,
 
     cb: (ctx, next) => {

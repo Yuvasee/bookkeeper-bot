@@ -13,6 +13,7 @@ const transactionSchema = new Schema(
         category: String,
         tags: [String],
         description: String,
+        env: String,
     },
     {
         timestamps: true,
