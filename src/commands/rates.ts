@@ -1,24 +1,25 @@
-const format = require('date-fns/format');
-const uniq = require('lodash/uniq');
 import axios from 'axios';
+import { format } from 'date-fns';
+import { uniq } from 'lodash';
 
 import Command from '../interfaces/Command';
 import Rate, { CURRENCIES } from '../models/Rate';
 import Transaction from '../models/Transaction';
-import { error } from "../views/error";
+import { TransactionDoc } from '../models/Transaction';
+import { error } from '../views/error';
 
 const RATES_API_URL = 'https://api.exchangeratesapi.io/';
 const BASE_CURRENCY = 'ILS';
 
-function apiString(date: Date) {
-    return `${RATES_API_URL}${date}?base=${BASE_CURRENCY}`;
+function apiString(dt: string) {
+    return `${RATES_API_URL}${dt}?base=${BASE_CURRENCY}`;
 }
 
-function getRatesFromApi(dt: Date) {
+function getRatesFromApi(dt: string) {
     return axios.get(apiString(dt));
 }
 
-function saveRatesFromApi(data, dt) {
+function saveRatesFromApi(data: any, dt: string) {
     return Promise.all(
         CURRENCIES.map((currency) =>
             Rate.create({
@@ -35,15 +36,14 @@ const rates: Command = {
 
     cb: (ctx, next) => {
         let dates;
-
-        const withRates = (err, rates) => {
+        Transaction.distinct('date').exec((err, transactionRates: Date[]) => {
             err && console.error(err);
 
-            dates = uniq(rates.map((rate) => format(rate, 'YYYY-MM-DD')));
+            dates = uniq(transactionRates.map((rate) => format(rate, 'YYYY-MM-DD')));
 
             dates.forEach((dt) => {
-                Rate.where({ date: dt }).exec((err, docs) => {
-                    err && console.error(err);
+                Rate.find({ date: dt }).exec((errRate, docs) => {
+                    errRate && console.error(errRate);
 
                     if (!docs.length) {
                         getRatesFromApi(dt).then(({ data }) => {
@@ -52,9 +52,7 @@ const rates: Command = {
                     }
                 });
             });
-        };
-
-        Transaction.distinct('date').exec(withRates);
+        });
 
         next();
     },

@@ -1,9 +1,9 @@
 const format = require('date-fns/format');
 
 import Command from '../interfaces/Command';
-import Transaction from '../models/Transaction';
 import Rate from '../models/Rate';
-import { error } from "../views/error";
+import Transaction from '../models/Transaction';
+import { error } from '../views/error';
 
 const revert: Command = {
     re: /^stats$/,
@@ -17,7 +17,7 @@ const revert: Command = {
 
         if (period) {
             period = period[1];
-            !period.match(/\d\d/) && Number(period) < 12
+            !period.match(/\d\d/) && Number(period) < 12;
         } else {
             period = format(new Date(), 'MM');
         }

@@ -1,7 +1,7 @@
 import Command from '../interfaces/Command';
 import Transaction from '../models/Transaction';
-import { error } from "../views/error";
-import { transaction } from "../views/transaction";
+import { error } from '../views/error';
+import { transaction } from '../views/transaction';
 
 const revert: Command = {
     re: /^revert$/,
@@ -9,7 +9,7 @@ const revert: Command = {
     cb: (ctx, next) => {
         Transaction.find()
             .sort({ createdAt: -1 })
-            .findOneAndDelete((err, t) => {
+            .findOneAndRemove((err, t) => {
                 if (err) {
                     ctx.replyWithHTML(error(err));
                 }

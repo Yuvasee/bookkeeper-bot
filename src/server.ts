@@ -1,6 +1,7 @@
 require('dotenv').config();
+const mongoose = require('mongoose');
 
-const db = require('./mongo');
+import db from './mongo';
 
 import minusSum from './commands/minusSum';
 import rates from './commands/rates';

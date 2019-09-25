@@ -13,7 +13,7 @@ export function getRates(dt: Date) {
     const dtRounded = dateRound(dt);
 
     return new Promise((res, rej) => {
-        Rate.where({ date: dtRounded }).exec((err, docs) => {
+        Rate.find({ date: dtRounded }).exec((err, docs) => {
             err && rej(err);
 
             if (!docs.length) {

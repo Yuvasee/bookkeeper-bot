@@ -1,14 +1,14 @@
 import Command from '../interfaces/Command';
 import Transaction from '../models/Transaction';
-import { error } from "../views/error";
-import { transaction } from "../views/transaction";
+import { error } from '../views/error';
+import { transaction } from '../views/transaction';
 
-function safeMatchOne(str, re, def = '') {
+function safeMatchOne(str: string, re: RegExp, def = '') {
     const result = str.match(re);
     return result ? result[1] : def;
 }
 
-function matchTags(str) {
+function matchTags(str: string) {
     let result = str.match(/#\w+/g);
     if (result) {
         result = result.map((v) => v.slice(1));
@@ -16,7 +16,7 @@ function matchTags(str) {
     return result || [];
 }
 
-function parseDate(str) {
+function parseDate(str: string) {
     const dt = new Date(str);
     return dt.toString() === 'Invalid Date' ? new Date() : dt;
 }
