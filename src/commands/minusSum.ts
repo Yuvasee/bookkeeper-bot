@@ -1,3 +1,6 @@
+import { Message, ParseMode } from 'node-telegram-bot-api';
+import TelegramBot = require('node-telegram-bot-api');
+
 import Command from '../interfaces/Command';
 import Transaction from '../models/Transaction';
 import { error } from '../views/error';
@@ -22,10 +25,9 @@ function parseDate(str: string) {
 }
 
 const minusSum: Command = {
-    re: /^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/,
-
-    cb: (ctx, next) => {
-        const { text } = ctx.message;
+    trigger: /^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/,
+    reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
+        const { text } = msg;
 
         let sumExpression = text.match(/^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/)[0];
         sumExpression = sumExpression.replace(/,/g, '.').slice(1);
@@ -33,24 +35,25 @@ const minusSum: Command = {
         const t = new Transaction({
             sum: Math.round(eval(sumExpression) * 100) / 100,
             date: parseDate(safeMatchOne(text, /@([^\s]+)/)),
-            actor: ctx.from.username,
+            actor: msg.from.username,
             currency: safeMatchOne(text, /\s\$([A-Z]{3})/, 'ILS'),
             category: safeMatchOne(text, /\/(\w+)/, 'Unsorted'),
             tags: matchTags(text),
             description: safeMatchOne(text, /\s([\w\s]+)/).trim(),
         });
 
-        ctx.replyWithHTML(transaction(t));
+        const id = msg.chat.id;
+        const options = { parse_mode: 'HTML' as ParseMode };
 
-        t.save((err) => {
+        bot.sendMessage(id, transaction(t), options);
+
+        t.save((err: any) => {
             if (err) {
-                ctx.replyWithHTML(error(err));
+                bot.sendMessage(id, error(err), options);
+            } else {
+                bot.sendMessage(id, `<b>Saved ${t.get('sum')} for ${t.get('category')}</b>`, options);
             }
-
-            ctx.replyWithHTML(`<b>Saved ${t.get('sum')} for ${t.get('category')}</b>`);
         });
-
-        next();
     },
 };
 

@@ -1,4 +1,3 @@
-import { model, Schema } from 'mongoose';
 import { createSchema, ExtractDoc, ExtractProps, Type, typedModel } from 'ts-mongoose';
 
 import { CURRENCIES } from './Rate';
@@ -16,8 +15,7 @@ const transactionSchema = createSchema(
         }),
         category: Type.string(),
         tags: Type.array().of(Type.string()),
-        description: Type.string(),
-        env: Type.string({ default: 'dev' }),
+        description: Type.optionalString(),
     },
     {
         timestamps: true,

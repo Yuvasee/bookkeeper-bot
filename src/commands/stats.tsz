@@ -6,7 +6,7 @@ import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 
 const revert: Command = {
-    re: /^stats$/,
+    command: /^stats$/,
 
     cb: (ctx, next) => {
         // TODO: filter by date (monthes)
@@ -25,7 +25,7 @@ const revert: Command = {
         // const { text } = ctx.message;
         Transaction.aggregate(
             [{ $group: { _id: '$category', sum: { $sum: '$sum' } } }, { $sort: { sum: -1 } }],
-            (err, res) => {
+            (err: any, res: any) => {
                 err && ctx.replyWithHTML(error(err));
                 ctx.replyWithHTML(res);
             },

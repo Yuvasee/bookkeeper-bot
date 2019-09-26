@@ -1,6 +1,6 @@
-import { TransactionDoc } from '../models/Transaction';
+// import { TransactionDoc } from '../models/Transaction';
 
-export function transaction(t: TransactionDoc) {
+export function transaction(t: any) {
     let tStr = `<b>Transaction: -${t.get('sum')} ${t.get('currency')}</b>`;
     tStr += `\ndate: ${t.get('date').toDateString()}`;
     tStr += `\nactor: ${t.get('actor')}`;

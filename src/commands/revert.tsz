@@ -4,7 +4,7 @@ import { error } from '../views/error';
 import { transaction } from '../views/transaction';
 
 const revert: Command = {
-    re: /^revert$/,
+    command: /^revert$/,
 
     cb: (ctx, next) => {
         Transaction.find()

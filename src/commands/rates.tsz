@@ -32,7 +32,7 @@ function saveRatesFromApi(data: any, dt: string) {
 }
 
 const rates: Command = {
-    re: /^rates$/,
+    command: /^rates$/,
 
     cb: (ctx, next) => {
         let dates;

@@ -6,7 +6,6 @@ const rateToIlsSchema = createSchema({
     date: Type.string(),
     currency: Type.string({ enum: CURRENCIES }),
     rate: Type.number(),
-    env: Type.string({ default: 'dev' }),
 });
 
 export default typedModel('Rate', rateToIlsSchema);
