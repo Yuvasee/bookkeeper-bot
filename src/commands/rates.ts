@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { format } from 'date-fns';
 import { uniq } from 'lodash';
+import { Message, ParseMode } from 'node-telegram-bot-api';
+import TelegramBot = require('node-telegram-bot-api');
 
 import Command from '../interfaces/Command';
 import Rate, { CURRENCIES } from '../models/Rate';
 import Transaction from '../models/Transaction';
-import { TransactionDoc } from '../models/Transaction';
-import { error } from '../views/error';
 
 const RATES_API_URL = 'https://api.exchangeratesapi.io/';
 const BASE_CURRENCY = 'ILS';
@@ -32,9 +32,9 @@ function saveRatesFromApi(data: any, dt: string) {
 }
 
 const rates: Command = {
-    command: /^rates$/,
+    trigger: /^rates$/,
 
-    cb: (ctx, next) => {
+    reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         let dates;
         Transaction.distinct('date').exec((err, transactionRates: Date[]) => {
             err && console.error(err);
@@ -47,14 +47,12 @@ const rates: Command = {
 
                     if (!docs.length) {
                         getRatesFromApi(dt).then(({ data }) => {
-                            saveRatesFromApi(data, dt).then(({}) => ctx.reply(`Added: ${dt}`));
+                            saveRatesFromApi(data, dt).then(({}) => bot.sendMessage(msg.chat.id, `Added: ${dt}`));
                         }, console.error);
                     }
                 });
             });
         });
-
-        next();
     },
 };
 
