@@ -6,26 +6,9 @@ import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 import { transaction } from '../views/transaction';
 
-function safeMatchOne(str: string, re: RegExp, def = '') {
-    const result = str.match(re);
-    return result ? result[1] : def;
-}
-
-function matchTags(str: string) {
-    let result = str.match(/#\w+/g);
-    if (result) {
-        result = result.map((v) => v.slice(1));
-    }
-    return result || [];
-}
-
-function parseDate(str: string) {
-    const dt = new Date(str);
-    return dt.toString() === 'Invalid Date' ? new Date() : dt;
-}
-
 const minusSum: Command = {
     trigger: /^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/,
+
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         const { text } = msg;
 
@@ -56,5 +39,22 @@ const minusSum: Command = {
         });
     },
 };
-
 export default minusSum;
+
+function safeMatchOne(str: string, re: RegExp, def = '') {
+    const result = str.match(re);
+    return result ? result[1] : def;
+}
+
+function matchTags(str: string) {
+    let result = str.match(/#\w+/g);
+    if (result) {
+        result = result.map((v) => v.slice(1));
+    }
+    return result || [];
+}
+
+function parseDate(str: string) {
+    const dt = new Date(str);
+    return dt.toString() === 'Invalid Date' ? new Date() : dt;
+}
