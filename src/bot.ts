@@ -9,7 +9,11 @@ import rates from './commands/rates';
 import revert from './commands/revert';
 import stats from './commands/stats';
 
-mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true, useFindAndModify: false });
+mongoose.connect(process.env.MONGO_STRING, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 
