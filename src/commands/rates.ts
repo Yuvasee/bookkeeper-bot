@@ -11,26 +11,6 @@ import Transaction from '../models/Transaction';
 const RATES_API_URL = 'https://api.exchangeratesapi.io/';
 const BASE_CURRENCY = 'ILS';
 
-function apiString(dt: string) {
-    return `${RATES_API_URL}${dt}?base=${BASE_CURRENCY}`;
-}
-
-function getRatesFromApi(dt: string) {
-    return axios.get(apiString(dt));
-}
-
-function saveRatesFromApi(data: any, dt: string) {
-    return Promise.all(
-        CURRENCIES.map((currency) =>
-            Rate.create({
-                date: dt,
-                currency,
-                rate: data.rates[currency],
-            }),
-        ),
-    );
-}
-
 const rates: Command = {
     trigger: /^rates$/,
 
@@ -61,5 +41,24 @@ const rates: Command = {
         });
     },
 };
-
 export default rates;
+
+function apiString(dt: string) {
+    return `${RATES_API_URL}${dt}?base=${BASE_CURRENCY}`;
+}
+
+function getRatesFromApi(dt: string) {
+    return axios.get(apiString(dt));
+}
+
+function saveRatesFromApi(data: any, dt: string) {
+    return Promise.all(
+        CURRENCIES.map((currency) =>
+            Rate.create({
+                date: dt,
+                currency,
+                rate: data.rates[currency],
+            }),
+        ),
+    );
+}
