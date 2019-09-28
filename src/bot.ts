@@ -21,6 +21,4 @@ withDb(() => {
 
 function registerCommand(bot: TelegramBot, command: Command) {
     bot.onText(command.trigger, command.reaction(bot));
-
-    bot.onText(/.*/, () => {});
 }
