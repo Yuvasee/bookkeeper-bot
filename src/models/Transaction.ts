@@ -1,25 +1,27 @@
-const { Schema, model } = require('mongoose');
+import { createSchema, ExtractDoc, ExtractProps, Type, typedModel } from 'ts-mongoose';
 
-const transactionSchema = new Schema(
+import { CURRENCIES } from './Rate';
+
+const CURRENCIES_WITH_ILS = [...CURRENCIES, 'ILS'];
+
+const transactionSchema = createSchema(
     {
-        sum: Number,
-        date: Date,
-        actor: String,
-        currency: {
-            type: String,
+        sum: Type.number(),
+        date: Type.date(),
+        actor: Type.string(),
+        currency: Type.string({
             default: 'ILS',
-            enum: ['ILS', 'RUB', 'USD', 'EUR'],
-        },
-        category: String,
-        tags: [String],
-        description: String,
-        env: String,
+            enum: CURRENCIES_WITH_ILS,
+        }),
+        category: Type.string(),
+        tags: Type.array().of(Type.string()),
+        description: Type.optionalString(),
     },
     {
         timestamps: true,
     },
 );
 
-const Transaction = model('Transaction', transactionSchema);
-
-export default Transaction;
+export default typedModel('Transaction', transactionSchema);
+export type TransactionDoc = ExtractDoc<typeof transactionSchema>;
+export type TransactionProps = ExtractProps<typeof transactionSchema>;

@@ -1,17 +1,13 @@
-const { Schema, model } = require('mongoose');
+import { createSchema, ExtractDoc, ExtractProps, Type, typedModel } from 'ts-mongoose';
 
-export const CURRENCIES = ['RUB', 'USD', 'EUR'];
+export const CURRENCIES = ['RUB', 'USD', 'EUR'] as const;
 
-const rateToIlsSchema = new Schema({
-    date: String,
-    currency: {
-        type: String,
-        enum: CURRENCIES,
-    },
-    rate: Number,
-    env: String,
+const rateToIlsSchema = createSchema({
+    date: Type.string(),
+    currency: Type.string({ enum: CURRENCIES }),
+    rate: Type.number(),
 });
 
-const Rate = model('Rate', rateToIlsSchema);
-
-export default Rate;
+export default typedModel('Rate', rateToIlsSchema);
+export type RateToIlsDoc = ExtractDoc<typeof rateToIlsSchema>;
+export type RateToIlsProps = ExtractProps<typeof rateToIlsSchema>;

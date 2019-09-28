@@ -1,10 +1,16 @@
 {
     "extends": "tslint:recommended",
     "rules": {
+        "object-literal-sort-keys": false,
         "max-line-length": {
             "options": [120]
         },
-        "quotemark": [true, "single", "jsx-double"]
+        "quotemark": [true, "single", "jsx-double"],
+        "no-eval": false,
+        "no-console": false,
+        "no-unused-expression": false,
+        "interface-name": false,
+        "no-var-requires": false
     },
     "jsRules": {
         "max-line-length": {
