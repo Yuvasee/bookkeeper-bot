@@ -1,6 +1,7 @@
 require('dotenv').config();
-import mongoose = require('mongoose');
 import TelegramBot = require('node-telegram-bot-api');
+
+import withDb from './db';
 
 import Command from './interfaces/Command';
 
@@ -9,19 +10,7 @@ import rates from './commands/rates';
 import revert from './commands/revert';
 import stats from './commands/stats';
 
-mongoose.connect(process.env.MONGO_STRING, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true,
-});
-
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-
-db.once('open', () => {
-    console.log('Connected to MongoDB');
-
+withDb(() => {
     const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
     registerCommand(bot, minusSum);
@@ -32,4 +21,6 @@ db.once('open', () => {
 
 function registerCommand(bot: TelegramBot, command: Command) {
     bot.onText(command.trigger, command.reaction(bot));
+
+    bot.onText(/.*/, () => {});
 }
