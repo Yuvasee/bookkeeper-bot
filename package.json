@@ -4,20 +4,24 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node --inspect=5858 -r ts-node/register ./src/server.ts",
-        "start:watch": "nodemon",
+        "start": "node --inspect -r ts-node/register ./src/bot.ts",
+        "watch": "nodemon",
         "build": "tsc"
     },
     "keywords": [],
     "author": "Yuri Vasilchikov",
     "license": "ISC",
     "devDependencies": {
+        "@types/dotenv": "^6.1.1",
         "@types/lodash": "^4.14.123",
+        "@types/mongoose": "^5.5.18",
         "@types/node": "^11.13.7",
+        "@types/node-telegram-bot-api": "^0.31.0",
         "eslint": "^5.16.0",
         "eslint-plugin-import": "^2.17.2",
         "nodemon": "^1.18.11",
         "ts-node": "^8.1.0",
+        "tslint": "^5.20.0",
         "typescript": "^3.4.5"
     },
     "dependencies": {
@@ -25,8 +29,9 @@
         "date-fns": "^1.30.1",
         "dotenv": "^7.0.0",
         "lodash": "^4.17.15",
-        "mongoose": "^5.5.4",
-        "telegraf": "^3.29.0"
+        "mongoose": "^5.7.1",
+        "node-telegram-bot-api": "^0.30.0",
+        "ts-mongoose": "0.0.19"
     },
     "nodemonConfig": {
         "ignore": [
@@ -40,5 +45,6 @@
         ],
         "exec": "npm start",
         "ext": "ts"
-    }
+    },
+    "type": "module"
 }

@@ -1,4 +1,6 @@
+import TelegramBot = require('node-telegram-bot-api');
+
 export default interface Command {
-    re: RegExp;
-    cb: (ctx: any, next: any) => void;
+    trigger: RegExp;
+    reaction: (bot: TelegramBot) => (ctx: any, next: any) => void;
 }
