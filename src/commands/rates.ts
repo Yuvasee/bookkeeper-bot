@@ -42,13 +42,19 @@ const rates: Command = {
             dates = uniq(transactionRates.map((rate) => format(rate, 'YYYY-MM-DD')));
 
             dates.forEach((dt) => {
-                Rate.find({ date: dt }).exec((errRate, docs) => {
+                Rate.find({ date: dt }).exec(async (errRate, docs) => {
                     errRate && console.error(errRate);
 
-                    if (!docs.length) {
-                        getRatesFromApi(dt).then(({ data }) => {
-                            saveRatesFromApi(data, dt).then(({}) => bot.sendMessage(msg.chat.id, `Added: ${dt}`));
-                        }, console.error);
+                    if (docs.length) {
+                        return;
+                    }
+
+                    try {
+                        const ratesData = await getRatesFromApi(dt);
+                        await saveRatesFromApi(ratesData, dt);
+                        bot.sendMessage(msg.chat.id, `Added: ${dt}`);
+                    } catch (error) {
+                        console.error(error);
                     }
                 });
             });

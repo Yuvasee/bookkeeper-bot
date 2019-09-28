@@ -15,9 +15,11 @@ const revert: Command = {
             .findOneAndRemove((err, t) => {
                 if (err) {
                     bot.sendMessage(msg.chat.id, error(err));
+                } else {
+                    bot.sendMessage(msg.chat.id, transaction(t) + '\n<b>Deleted</b>', {
+                        parse_mode: 'HTML' as ParseMode,
+                    });
                 }
-
-                bot.sendMessage(msg.chat.id, transaction(t) + '\n<b>Deleted</b>', { parse_mode: 'HTML' as ParseMode });
             });
     },
 };
