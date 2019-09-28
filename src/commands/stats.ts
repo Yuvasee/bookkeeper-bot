@@ -7,32 +7,32 @@ import Rate from '../models/Rate';
 import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 
-const revert: Command = {
+const stats: Command = {
     trigger: /^stats$/,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         // TODO: filter by date (monthes)
 
-        const { text } = msg;
+        // const { text } = msg;
 
-        let period = '';
-        const periodMatch = text.match(/^stats\s+([\d\w]+)\s?/);
+        // let period = '';
+        // const periodMatch = text.match(/^stats\s+([\d\w]+)\s?/);
 
-        if (periodMatch) {
-            period = periodMatch[1];
-            !period.match(/\d\d/) && Number(period) < 12;
-        } else {
-            period = format(new Date(), 'MM');
-        }
+        // if (periodMatch) {
+        //     period = periodMatch[1];
+        //     !period.match(/\d\d/) && Number(period) < 12;
+        // } else {
+        //     period = format(new Date(), 'MM');
+        // }
 
-        Transaction.aggregate(
-            [{ $group: { _id: '$category', sum: { $sum: '$sum' } } }, { $sort: { sum: -1 } }],
-            (err: any, res: any) => {
-                err && bot.sendMessage(msg.chat.id, error(err));
-                bot.sendMessage(msg.chat.id, res);
-            },
-        );
+        // Transaction.aggregate(
+        //     [{ $group: { _id: '$category', sum: { $sum: '$sum' } } }, { $sort: { sum: -1 } }],
+        //     (err: any, res: any) => {
+        //         err && bot.sendMessage(msg.chat.id, error(err));
+        //         bot.sendMessage(msg.chat.id, res);
+        //     },
+        // );
     },
 };
 
-export default revert;
+export default stats;

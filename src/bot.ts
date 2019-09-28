@@ -1,12 +1,15 @@
 require('dotenv').config();
+import mongoose = require('mongoose');
 import TelegramBot = require('node-telegram-bot-api');
-const mongoose = require('mongoose');
+
+import Command from './interfaces/Command';
 
 import minusSum from './commands/minusSum';
 import rates from './commands/rates';
-import Command from './interfaces/Command';
+import revert from './commands/revert';
+import stats from './commands/stats';
 
-mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true, useFindAndModify: false });
 
 const db = mongoose.connection;
 
@@ -19,13 +22,9 @@ db.once('open', () => {
 
     registerCommand(bot, minusSum);
     registerCommand(bot, rates);
+    registerCommand(bot, revert);
+    registerCommand(bot, stats);
 });
-
-// import revert from './commands/revert';
-// import stats from './commands/stats';
-
-// registerCommand(revert);
-// registerCommand(stats);
 
 function registerCommand(bot: TelegramBot, command: Command) {
     bot.onText(command.trigger, command.reaction(bot));
