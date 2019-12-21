@@ -10,6 +10,7 @@ import makeDump from './commands/makeDump';
 import rates from './commands/rates';
 import revert from './commands/revert';
 import stats from './commands/stats';
+import hi from './commands/hi';
 
 withDb(() => {
     const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
@@ -19,6 +20,7 @@ withDb(() => {
     registerCommand(bot, rates);
     registerCommand(bot, revert);
     registerCommand(bot, stats);
+    registerCommand(bot, hi);
 });
 
 function registerCommand(bot: TelegramBot, command: Command) {

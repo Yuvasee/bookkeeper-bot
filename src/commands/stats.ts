@@ -8,7 +8,7 @@ import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 
 const stats: Command = {
-    trigger: /^stats$/,
+    trigger: /^stats$/i,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         // TODO: filter by date (monthes)
