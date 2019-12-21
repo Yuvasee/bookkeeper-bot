@@ -10,7 +10,9 @@
         "no-console": false,
         "no-unused-expression": false,
         "interface-name": false,
-        "no-var-requires": false
+        "no-var-requires": false,
+        "arrow-parens": false,
+        "ordered-imports": false
     },
     "jsRules": {
         "max-line-length": {
