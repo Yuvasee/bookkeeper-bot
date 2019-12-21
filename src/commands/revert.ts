@@ -7,7 +7,7 @@ import { error } from '../views/error';
 import { transaction } from '../views/transaction';
 
 const revert: Command = {
-    trigger: /^revert$/,
+    trigger: /^revert$/i,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         Transaction.find()

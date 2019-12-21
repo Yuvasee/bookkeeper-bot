@@ -8,7 +8,7 @@ import RateToIls, { RateToIlsDoc } from '../models/Rate';
 import { error } from '../views/error';
 
 const makeDump: Command = {
-    trigger: /^dump$/,
+    trigger: /^dump$/i,
 
     reaction: (bot: TelegramBot) => async (msg: Message, match: RegExpExecArray) => {
         try {

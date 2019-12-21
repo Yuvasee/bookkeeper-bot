@@ -12,7 +12,7 @@ const RATES_API_URL = 'https://api.exchangeratesapi.io/';
 const BASE_CURRENCY = 'ILS';
 
 const rates: Command = {
-    trigger: /^rates$/,
+    trigger: /^rates$/i,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         let dates;
