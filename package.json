@@ -1,6 +1,6 @@
 {
     "name": "bookkeeper-bot",
-    "version": "0.0.7",
+    "version": "0.1.0",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -31,7 +31,8 @@
         "lodash": "^4.17.15",
         "mongoose": "^5.7.1",
         "node-telegram-bot-api": "^0.30.0",
-        "ts-mongoose": "0.0.19"
+        "ts-mongoose": "0.0.19",
+        "xlsx": "^0.15.3"
     },
     "nodemonConfig": {
         "ignore": [

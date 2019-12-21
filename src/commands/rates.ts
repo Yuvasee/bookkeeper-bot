@@ -19,9 +19,9 @@ const rates: Command = {
         Transaction.distinct('date').exec((err, transactionRates: Date[]) => {
             err && console.error(err);
 
-            dates = uniq(transactionRates.map((rate) => format(rate, 'YYYY-MM-DD')));
+            dates = uniq(transactionRates.map(rate => format(rate, 'YYYY-MM-DD')));
 
-            dates.forEach((dt) => {
+            dates.forEach(dt => {
                 Rate.find({ date: dt }).exec(async (errRate, docs) => {
                     errRate && console.error(errRate);
 
@@ -30,11 +30,11 @@ const rates: Command = {
                     }
 
                     try {
-                        const ratesData = await getRatesFromApi(dt);
-                        await saveRatesFromApi(ratesData, dt);
+                        const ratesResponse = await getRatesFromApi(dt);
+                        await saveRatesFromApi(ratesResponse.data, dt);
                         bot.sendMessage(msg.chat.id, `Added: ${dt}`);
                     } catch (error) {
-                        console.error(error);
+                        console.error(error, dt);
                     }
                 });
             });
@@ -53,12 +53,12 @@ function getRatesFromApi(dt: string) {
 
 function saveRatesFromApi(data: any, dt: string) {
     return Promise.all(
-        CURRENCIES.map((currency) =>
+        CURRENCIES.map(currency =>
             Rate.create({
                 date: dt,
                 currency,
                 rate: data.rates[currency],
-            }),
-        ),
+            })
+        )
     );
 }
