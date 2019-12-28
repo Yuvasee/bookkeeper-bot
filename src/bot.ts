@@ -13,6 +13,8 @@ import stats from './commands/stats';
 import hi from './commands/hi';
 import catsSet from './commands/cats';
 
+checkEnvs();
+
 withDb(() => {
     const telegramApi = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
@@ -26,3 +28,12 @@ withDb(() => {
         .registerCommandSet(catsSet)
         .registerFallback();
 });
+
+function checkEnvs() {
+    if (!process.env.BOT_TOKEN) {
+        throw new Error('No bot token found');
+    }
+    if (!process.env.MONGO_STRING) {
+        throw new Error('No DB string found');
+    }
+}
