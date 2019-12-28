@@ -6,25 +6,22 @@ import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 import { transaction } from '../views/transaction';
 
-// TODO: fix / sign in expression
-// TODO: make currency work lowercase
-
 const minus: Command = {
     name: 'minus',
-    trigger: /^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/,
+    trigger: /^-\d+(?:[.,]\d+)?(?:[+\-*\/]\d+(?:[.,]\d+)?)*/,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
         const { text } = msg;
 
-        let sumExpression = text.match(/^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/)[0];
+        let sumExpression = text.match(/^-\d+(?:[.,]\d+)?(?:[+\-*\/]\d+(?:[.,]\d+)?)*/)[0];
         sumExpression = sumExpression.replace(/,/g, '.').slice(1);
 
         const t = new Transaction({
             sum: Math.round(eval(sumExpression) * 100) / 100,
             date: parseDate(safeMatchOne(text, /@([^\s]+)/)),
             actor: msg.from.username,
-            currency: safeMatchOne(text, /\s\$([A-Z]{3})/, 'ILS'),
-            category: safeMatchOne(text, /\/(\w+)/, 'Unsorted'),
+            currency: safeMatchOne(text, /\s\$([a-zA-Z]{3})/, 'ILS').toUpperCase(),
+            category: safeMatchOne(text, /\:(\w+)/, 'Unsorted'),
             tags: matchTags(text),
             description: safeMatchOne(text, /\s([\w\s]+)/).trim(),
         });

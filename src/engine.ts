@@ -57,11 +57,13 @@ export function createBot(api: TelegramBot): Bot {
         },
 
         registerFallback(this: Bot) {
-            const reMinusSum = '-\\d+\\/\\w+';
+            // matches minus command
+            const reMinusSum = '-\\d+(?:[.,]\\d+)?(?:[+\\-*\\/]\\d+(?:[.,]\\d+)?)*';
             const commands = [...this.registeredCommands];
-            const commandsJoined = reMinusSum + commands.join('|');
+            const commandsJoined = commands.join('|');
 
-            const reFallbackGlobal = `^(?!(${commandsJoined})).+|^(${commandsJoined})\\w+.*`;
+            // matches all but valid commands
+            const reFallbackGlobal = `^(?!(${reMinusSum}|${commandsJoined})).+|^(${commandsJoined})\\w+.*`;
 
             this.registerCommand({
                 name: 'global fallback',
