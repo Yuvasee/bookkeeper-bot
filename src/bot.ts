@@ -3,7 +3,7 @@ import TelegramBot = require('node-telegram-bot-api');
 
 import withDb from './db';
 
-import Command from './interfaces/Command';
+import { registerCommand, registerCommandSet } from './engine';
 
 import minusSum from './commands/minusSum';
 import makeDump from './commands/makeDump';
@@ -11,18 +11,16 @@ import rates from './commands/rates';
 import revert from './commands/revert';
 import stats from './commands/stats';
 import hi from './commands/hi';
+import catsSet from './commands/cats';
 
 withDb(() => {
-    const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
+    const telegramApi = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
-    registerCommand(bot, minusSum);
-    registerCommand(bot, makeDump);
-    registerCommand(bot, rates);
-    registerCommand(bot, revert);
-    registerCommand(bot, stats);
-    registerCommand(bot, hi);
+    registerCommand(telegramApi, minusSum);
+    registerCommand(telegramApi, makeDump);
+    registerCommand(telegramApi, rates);
+    registerCommand(telegramApi, revert);
+    registerCommand(telegramApi, stats);
+    registerCommand(telegramApi, hi);
+    registerCommandSet(telegramApi, catsSet);
 });
-
-function registerCommand(bot: TelegramBot, command: Command) {
-    bot.onText(command.trigger, command.reaction(bot));
-}

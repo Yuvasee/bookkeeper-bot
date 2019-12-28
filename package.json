@@ -1,7 +1,7 @@
 {
-    "name": "bookkeeper-bot",
-    "version": "0.1.1",
-    "description": "",
+    "name": "what-am-i",
+    "version": "0.2",
+    "description": "Finance tracking and planning with bots",
     "main": "index.js",
     "scripts": {
         "start": "node --inspect -r ts-node/register ./src/bot.ts",
@@ -9,7 +9,7 @@
         "build": "tsc"
     },
     "keywords": [],
-    "author": "Yuri Vasilchikov",
+    "author": "Yuri Vasilchikov <yuri.v9v@gmail.com>",
     "license": "ISC",
     "devDependencies": {
         "@types/dotenv": "^6.1.1",
