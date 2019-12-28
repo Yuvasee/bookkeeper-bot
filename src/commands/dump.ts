@@ -15,7 +15,7 @@ const dump: Command = {
         try {
             const [transactionDocs, rateDocs] = await Promise.all([Transaction.find(), RateToIls.find()]);
             const transactions = transactionDocs.map(a => a.toObject() as TransactionDoc);
-            const rates = rateDocs.map(a => a.toObject() as TransactionDoc);
+            const rates = rateDocs.map(a => a.toObject() as RateToIlsDoc);
 
             const book = XLSX.utils.book_new();
             book.Sheets.transactions = XLSX.utils.json_to_sheet(transactions);
