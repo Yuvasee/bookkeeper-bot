@@ -7,7 +7,8 @@ import { error } from '../views/error';
 
 const JOKE_API_URL = 'https://icanhazdadjoke.com';
 
-const stats: Command = {
+const hi: Command = {
+    name: 'hi',
     trigger: /^hi$/i,
 
     reaction: (bot: TelegramBot) => async (msg: Message, match: RegExpExecArray) => {
@@ -23,4 +24,4 @@ const stats: Command = {
     },
 };
 
-export default stats;
+export default hi;

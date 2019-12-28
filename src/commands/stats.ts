@@ -8,6 +8,7 @@ import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 
 const stats: Command = {
+    name: 'stats',
     trigger: /^stats$/i,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {

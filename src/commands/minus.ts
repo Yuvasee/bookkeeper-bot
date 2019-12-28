@@ -6,7 +6,11 @@ import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 import { transaction } from '../views/transaction';
 
-const minusSum: Command = {
+// TODO: fix / sign in expression
+// TODO: make currency work lowercase
+
+const minus: Command = {
+    name: 'minus',
     trigger: /^-\d+(?:[.,]\d+)?(?:[+\-*]\d+(?:[.,]\d+)?)*/,
 
     reaction: (bot: TelegramBot) => (msg: Message, match: RegExpExecArray) => {
@@ -39,7 +43,7 @@ const minusSum: Command = {
         });
     },
 };
-export default minusSum;
+export default minus;
 
 function safeMatchOne(str: string, re: RegExp, def = '') {
     const result = str.match(re);

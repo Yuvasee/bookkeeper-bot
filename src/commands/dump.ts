@@ -7,7 +7,8 @@ import Transaction, { TransactionDoc } from '../models/Transaction';
 import RateToIls, { RateToIlsDoc } from '../models/Rate';
 import { error } from '../views/error';
 
-const makeDump: Command = {
+const dump: Command = {
+    name: 'dump',
     trigger: /^dump$/i,
 
     reaction: (bot: TelegramBot) => async (msg: Message, match: RegExpExecArray) => {
@@ -38,4 +39,4 @@ const makeDump: Command = {
     },
 };
 
-export default makeDump;
+export default dump;

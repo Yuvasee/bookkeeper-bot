@@ -1,6 +1,6 @@
 {
     "name": "what-am-i",
-    "version": "0.2",
+    "version": "0.3.0",
     "description": "Finance tracking and planning with bots",
     "main": "index.js",
     "scripts": {
