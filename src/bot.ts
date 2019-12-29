@@ -11,6 +11,8 @@ import rates from './commands/rates';
 import revert from './commands/revert';
 import stats from './commands/stats';
 import hi from './commands/hi';
+
+import trSet from './commands/tr';
 import catsSet from './commands/cats';
 
 checkEnvs();
@@ -25,6 +27,7 @@ withDb(() => {
         .registerCommand(revert)
         .registerCommand(stats)
         .registerCommand(hi)
+        .registerCommandSet(trSet)
         .registerCommandSet(catsSet)
         .registerFallback();
 });
