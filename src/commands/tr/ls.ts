@@ -1,10 +1,9 @@
-import { startOfMonth, endOfMonth, format } from 'date-fns';
+import { startOfMonth, endOfMonth } from 'date-fns';
 import { ParseMode } from 'node-telegram-bot-api';
 
 import Command from '../../interfaces/Command';
-import Transaction, { TransactionDoc } from '../../models/Transaction';
+import Transaction from '../../models/Transaction';
 import { error } from '../../views/error';
-import { alignAndExtendStrArray } from '../../views/utils';
 import transactionListView from '../../views/transactionList';
 
 const trLs: Command = {
