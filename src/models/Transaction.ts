@@ -15,7 +15,7 @@ const transactionSchema = createSchema(
         }),
         category: Type.string(),
         tags: Type.array().of(Type.string()),
-        description: Type.optionalString(),
+        description: Type.string({ required: false }),
     },
     {
         timestamps: true,
