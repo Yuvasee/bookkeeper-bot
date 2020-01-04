@@ -22,7 +22,21 @@ export function transactionListView(transactions: TransactionDoc[]) {
         return `id ${tr.id}`;
     });
 
-    return `<pre>${format(new Date(), 'MMMM YYYY')}:\n${strTransactions.join('\n')}</pre>`;
+    const chunks = strTransactions.reduce(
+        (acc, v) => {
+            if ((acc[acc.length - 1] + v).length <= 4000) {
+                acc[acc.length - 1] += `\n${v}`;
+            } else {
+                acc.push(`\n${v}`);
+            }
+            return acc;
+        },
+        [''] as string[],
+    );
+
+    return chunks.map(
+        (ch, n) => `<pre>${format(transactions[0].date, 'MMMM YYYY')} (${n + 1}/${chunks.length}):${ch}</pre>`,
+    );
 }
 
 export default transactionListView;

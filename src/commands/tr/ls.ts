@@ -25,13 +25,15 @@ const trLs: Command = {
                 .gte(start)
                 .lte(end)
                 .where('actor')
-                .equals(msg.from.username);
+                .equals(msg.from.username)
+                .sort('date');
 
-            const message = transactionListView(transactions);
+            const messages = transactionListView(transactions);
 
             const options = { parse_mode: 'HTML' as ParseMode };
-
-            bot.sendMessage(msg.chat.id, message, options);
+            messages.forEach((m, i) => {
+                setTimeout(() => bot.sendMessage(msg.chat.id, m, options), i * 100);
+            });
         } catch (err) {
             bot.sendMessage(msg.chat.id, error(err));
         }
