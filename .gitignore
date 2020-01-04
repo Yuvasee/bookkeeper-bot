@@ -3,3 +3,4 @@ node_modules
 ecosystem.config.js
 .notes.md
 .dump
+dist
