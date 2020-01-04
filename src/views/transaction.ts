@@ -1,11 +1,13 @@
-// import { TransactionDoc } from '../models/Transaction';
+import { TransactionDoc } from '../models/Transaction';
 
-export function transaction(t: any) {
-    let tStr = `<b>Transaction: -${t.get('sum')} ${t.get('currency')}</b>`;
-    tStr += `\ndate: ${t.get('date').toDateString()}`;
-    tStr += `\nactor: ${t.get('actor')}`;
-    tStr += `\ncategory: ${t.get('category')}`;
-    tStr += `\ntags: ${t.get('tags').join(', ')}`;
-    tStr += `\ndescription: ${t.get('description')}`;
-    return tStr;
+export function transaction(t: TransactionDoc) {
+    return (
+        `<b>Transaction -${t.sum} ${t.currency} saved:</b>` +
+        `\nid: ${t.id}` +
+        `\ndate: ${t.date.toDateString()}` +
+        `\nactor: ${t.actor}` +
+        `\ncategory: ${t.category}` +
+        `\ntags: ${t.tags.join(', ')}` +
+        `\ndescription: ${t.description}`
+    );
 }

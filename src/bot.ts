@@ -5,7 +5,7 @@ import withDb from './db';
 
 import { createBot } from './engine';
 
-import minus from './commands/minus';
+import minus from './commands/tr/minus';
 import dump from './commands/dump';
 import rates from './commands/rates';
 import revert from './commands/revert';
