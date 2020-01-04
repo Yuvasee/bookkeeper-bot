@@ -13,8 +13,8 @@ const trLs: Command = {
         const { text } = msg;
 
         const innerMatch = text.match(/^tr\s+ls\s+(-?\d{1,2})(?:\s+(\d{4}))?\s*/);
-        const monthMatch = Number(innerMatch[1]);
-        const yearMatch = Number(innerMatch[2]);
+        const monthMatch = innerMatch ? Number(innerMatch[1]) : 0;
+        const yearMatch = innerMatch ? Number(innerMatch[2]) : 0;
 
         const [month, year] = getMonthYearFromMatch(monthMatch, yearMatch);
         const [start, end] = getStartEnd(month, year);
@@ -23,7 +23,9 @@ const trLs: Command = {
             const transactions = await Transaction.find()
                 .where('date')
                 .gte(start)
-                .lte(end);
+                .lte(end)
+                .where('actor')
+                .equals(msg.from.username);
 
             const message = transactionListView(transactions);
 
