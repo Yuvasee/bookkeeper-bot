@@ -1,12 +1,12 @@
 import CommandSet from '../../interfaces/CommandSet';
 
-import list from './list';
+import ls from './ls';
 import merge from './merge';
 import fallback from './fallback';
 
 export const catsSet: CommandSet = {
     name: 'cats',
-    commands: { list, merge },
+    commands: { ls, merge },
     fallback,
 };
 
