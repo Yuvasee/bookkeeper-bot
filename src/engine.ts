@@ -21,10 +21,14 @@ export function createBot(api: TelegramBot): Bot {
                 throw new Error(`Command names collision occured: ${command.name}. Commands should have unique names.`);
             }
 
-            command.trigger && this.api.onText(command.trigger, command.reaction(this.api));
-            this.registeredCommands.add(command.name);
-            console.log('Registered command: ' + command.name);
+            if (!command.trigger) {
+                throw new Error(`Command ${command.name} has no trigger`);
+            }
 
+            this.api.onText(command.trigger, command.reaction(this.api));
+            this.registeredCommands.add(command.name);
+
+            console.log('Registered command: ' + command.name);
             return this;
         },
 
