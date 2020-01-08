@@ -15,10 +15,10 @@ import hi from './commands/hi';
 import trSet from './commands/tr';
 import catsSet from './commands/cats';
 
-checkEnvs();
+const { botToken, mongoString } = getEnvs();
 
-withDb(() => {
-    const telegramApi = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
+withDb(mongoString, () => {
+    const telegramApi = new TelegramBot(botToken, { polling: true });
 
     createBot(telegramApi)
         .registerCommand(minus)
@@ -32,11 +32,15 @@ withDb(() => {
         .registerFallback();
 });
 
-function checkEnvs() {
+function getEnvs() {
     if (!process.env.BOT_TOKEN) {
         throw new Error('No bot token found');
     }
     if (!process.env.MONGO_STRING) {
         throw new Error('No DB string found');
     }
+    return {
+        botToken: process.env.BOT_TOKEN,
+        mongoString: process.env.MONGO_STRING,
+    };
 }

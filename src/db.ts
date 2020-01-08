@@ -1,7 +1,7 @@
 import mongoose = require('mongoose');
 
-export default function withDb(fn: () => void) {
-    mongoose.connect(process.env.MONGO_STRING, {
+export default function withDb(mongoString: string, fn: () => void) {
+    mongoose.connect(mongoString, {
         useNewUrlParser: true,
         useFindAndModify: false,
         useUnifiedTopology: true,
