@@ -1,9 +1,7 @@
-require('dotenv').config();
 import TelegramBot = require('node-telegram-bot-api');
+import BotEngine from '@v9v/nodejs-bot-engine';
 
 import withDb from './db';
-
-import { createBot } from './engine';
 
 import minus from './commands/tr/minus';
 import dump from './commands/dump';
@@ -15,12 +13,13 @@ import hi from './commands/hi';
 import trSet from './commands/tr';
 import catsSet from './commands/cats';
 
+require('dotenv').config();
 const { botToken, mongoString } = getEnvs();
 
 withDb(mongoString, () => {
     const telegramApi = new TelegramBot(botToken, { polling: true });
 
-    createBot(telegramApi)
+    new BotEngine(telegramApi)
         .registerCommand(minus)
         .registerCommand(dump)
         .registerCommand(rates)

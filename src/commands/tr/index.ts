@@ -1,4 +1,4 @@
-import CommandSet from '../../interfaces/CommandSet';
+import { CommandSet } from '@v9v/nodejs-bot-engine';
 
 import fallback from './fallback';
 import ls from './ls';

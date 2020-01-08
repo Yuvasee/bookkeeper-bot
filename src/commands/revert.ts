@@ -1,7 +1,7 @@
 import { Message, ParseMode } from 'node-telegram-bot-api';
 import TelegramBot = require('node-telegram-bot-api');
 
-import Command from '../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import Transaction from '../models/Transaction';
 import { error } from '../views/error';
 import { transaction } from '../views/transaction';

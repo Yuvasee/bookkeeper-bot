@@ -2,7 +2,7 @@ import { Message } from 'node-telegram-bot-api';
 import TelegramBot = require('node-telegram-bot-api');
 import XLSX = require('xlsx');
 
-import Command from '../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import Transaction, { TransactionDoc } from '../models/Transaction';
 import RateToIls, { RateToIlsDoc } from '../models/Rate';
 import { error } from '../views/error';

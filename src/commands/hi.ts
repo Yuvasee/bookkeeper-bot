@@ -2,7 +2,7 @@ import { Message } from 'node-telegram-bot-api';
 import TelegramBot = require('node-telegram-bot-api');
 import axios from 'axios';
 
-import Command from '../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import { error } from '../views/error';
 
 const JOKE_API_URL = 'https://icanhazdadjoke.com';

@@ -2,7 +2,7 @@ import format = require('date-fns/format');
 import { Message, ParseMode } from 'node-telegram-bot-api';
 import TelegramBot = require('node-telegram-bot-api');
 
-import Command from '../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import Rate from '../models/Rate';
 import Transaction from '../models/Transaction';
 import { error } from '../views/error';

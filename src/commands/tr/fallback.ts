@@ -1,4 +1,4 @@
-import Command from '../../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import { error } from '../../views/error';
 
 const text = `

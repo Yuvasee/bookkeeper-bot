@@ -1,6 +1,6 @@
 import { ParseMode } from 'node-telegram-bot-api';
 
-import Command from '../../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import Transaction from '../../models/Transaction';
 import { parseTransaction } from './_common';
 import { error } from '../../views/error';

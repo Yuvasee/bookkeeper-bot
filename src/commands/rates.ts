@@ -4,7 +4,7 @@ import { uniq } from 'lodash';
 import { Message, ParseMode } from 'node-telegram-bot-api';
 import TelegramBot = require('node-telegram-bot-api');
 
-import Command from '../interfaces/Command';
+import { Command } from '@v9v/nodejs-bot-engine';
 import Rate, { CURRENCIES } from '../models/Rate';
 import Transaction from '../models/Transaction';
 
